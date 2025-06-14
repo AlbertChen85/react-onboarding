@@ -1,0 +1,13 @@
+default_install_hook_types:
+  - pre-commit
+  - commit-msg
+
+repos:
+  - repo: local
+    hooks:
+      - id: one-agent-adminsite-lint
+        name: One agent admin site lint
+        language: system
+        entry: bash -c "pnpm lint"
+        files: ^src/.*\.(ts|tsx|js|jsx)$
+        exclude: ^(node_modules|build)/.*$
