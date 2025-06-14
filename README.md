@@ -2,6 +2,14 @@
 
 Light-weight task management system.
 
+# Set-up pre-commit hook
+
+```sh
+pip install pre-commit
+pre-commit install
+git config --unset-all core.hooksPath
+```
+
 # Feature
 
 - List view for showing tasks with name and status. User can sort and filter the task.
