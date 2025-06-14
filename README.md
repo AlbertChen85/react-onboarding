@@ -3,6 +3,7 @@
 Light-weight task management system.
 
 # Feature
+
 - List view for showing tasks with name and status. User can sort and filter the task.
 - Create/Edit page for add/edit the task with those properties
   - Task name
