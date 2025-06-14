@@ -29,9 +29,9 @@ git config --unset-all core.hooksPath
 ```
 
 # Available endpoints
-- (Get) `/api/v1/task` - List all tasks
-- (POST) `/api/v1/task` - Create a new task
-- (GET) `/api/v1/task/{task_id}` - Get a specific task by ID
-- (PUT) `/api/v1/task/{task_id}` - Update a specific task by ID
-- (DELETE) `/api/v1/task/{task_id}` - Delete a specific task by ID
-- (GET) `/api/v1/task-status` - Get all available task statuses
+- (Get) `/api/task` - List all tasks
+- (POST) `/api/task` - Create a new task
+- (GET) `/api/task/{task_id}` - Get a specific task by ID
+- (PUT) `/api/task/{task_id}` - Update a specific task by ID
+- (DELETE) `/api/task/{task_id}` - Delete a specific task by ID
+- (GET) `/api/task-status` - Get all available task statuses
