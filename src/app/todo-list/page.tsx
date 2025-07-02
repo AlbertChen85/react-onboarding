@@ -7,6 +7,12 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { useRouter } from 'next/navigation'
 
+export default function Page() {
+    return (
+        page()
+    )
+}
+
 const page = () => {
     const router = useRouter();
     return (
@@ -20,5 +26,3 @@ const page = () => {
         </Container>
     )
 }
-
-export default page
