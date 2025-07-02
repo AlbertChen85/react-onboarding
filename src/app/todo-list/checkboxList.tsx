@@ -9,43 +9,39 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 
 export default function CheckboxList() {
-    const [checked, setChecked] = React.useState([-1]);
+    const [checkedTodoIdList, setCheckedTodoIdList] = React.useState<string[] | null>(null);
 
-    const handleToggle = (value: number) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
-
-        if (currentIndex === -1) {
-            newChecked.push(value);
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
-
-        setChecked(newChecked);
+    const handleToggle = (selectTodoId: string | number) => () => {
+        const id = String(selectTodoId);
+        setCheckedTodoIdList(checkedTodoIdList?.includes(id)
+            ? checkedTodoIdList.filter((todoId) => id !== todoId)
+            : [...(checkedTodoIdList ?? []), id]
+        );
     };
 
     return (
         <List sx={{ width: '100%' }}>
-            {[0, 1, 2, 3].map((value) => {
-                const labelId = `checkbox-list-label-${value}`;
+            {Array.from(Array(4).keys()).map((keys) => {
+                const labelId = `checkbox-list-label-${keys}`;
+                const key = String(keys);
 
                 return (
                     <ListItem
-                        key={value}
+                        key={key}
                         disablePadding
                         sx={{ border: '1px solid #e0e0e0', borderRadius: 1, mb: 1 }}
                     >
-                        <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
+                        <ListItemButton role={undefined} onClick={handleToggle(key)} dense>
                             <ListItemIcon>
                                 <Checkbox
                                     edge="start"
-                                    checked={checked.includes(value)}
+                                    checked={checkedTodoIdList?.includes(key) ?? false}
                                     tabIndex={-1}
                                     disableRipple
                                     slotProps={{ input: { 'aria-labelledby': labelId } }}
                                 />
                             </ListItemIcon>
-                            <ListItemText id={labelId} primary={`Line item ${value + 1}`} slotProps={{ primary: { style: { color: 'black' } } }} />
+                            <ListItemText id={labelId} primary={`Line item ${keys + 1}`} slotProps={{ primary: { style: { color: 'black' } } }} />
                         </ListItemButton>
                     </ListItem>
                 );
