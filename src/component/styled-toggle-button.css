@@ -15,7 +15,6 @@
 	--sun: hsl(47, 91%, 58%);
 	--moon: hsl(212, 13%, 82%);
 	--crater: hsl(221, 16%, 68%);
-	--bg: hsl(219, 30%, 88%);
 	--bear-speed: 10s;
   --color: hsl(219 30% 20%);
 }
@@ -35,7 +34,6 @@ body {
 	place-items: center;
 	min-height: 100vh;
 	overflow: hidden;
-	background: var(--bg);
   transition: background var(--speed) var(--easing);
 	font-family: sans-serif, system-ui;
 }
