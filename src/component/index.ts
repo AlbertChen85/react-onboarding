@@ -1,1 +1,1 @@
-export { default as StyledToggleButton } from './styled-toggle-button';
+export { StyledToggleButton } from './styled-toggle-button';
