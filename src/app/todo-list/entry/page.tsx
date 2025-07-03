@@ -1,10 +1,7 @@
-import Box from '@mui/material/Box'
+import Box from '@mui/material/Box';
 
 export default function Page() {
-
-  return (
-    page()
-  )
+  return page();
 }
 
 const page = () => {
@@ -12,5 +9,5 @@ const page = () => {
     <Box mt={8} display="flex" alignItems="flex-start" minHeight="100vh">
       <h1 style={{ margin: '0 auto', width: 'fit-content' }}>This is Entry</h1>
     </Box>
-  )
-}
+  );
+};
