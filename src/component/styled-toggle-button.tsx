@@ -5,19 +5,16 @@ import './styled-toggle-button.css';
 
 type StyledToggleButtonProps = {
     onChange?: (value: boolean) => void;
+    checked?: boolean;
 };
 
-export default function StyledToggleButton({ onChange }: StyledToggleButtonProps) {
-    const [isToggled, setIsToggled] = useState(false);
-
-    useEffect(() => {
-        document.documentElement.setAttribute('data-dark-mode', isToggled ? 'true' : 'false');
-    }, [isToggled]);
+export function StyledToggleButton({ onChange, checked }: StyledToggleButtonProps) {
+    const [isToggled, setIsToggled] = useState(!!checked);
 
     const handleToggled = () => {
-        const newValue = !isToggled;
-        setIsToggled(newValue);
-        if (onChange) onChange(newValue);
+        checked = !isToggled;
+        setIsToggled(checked);
+        if (onChange) onChange(checked);
     };
 
     return (
