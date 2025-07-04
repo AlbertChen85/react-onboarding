@@ -4,7 +4,7 @@ import { AppBar, Box, Checkbox, FormControlLabel, Toolbar, Typography } from '@m
 import React, { useEffect, useState } from 'react';
 import { StyledToggleButton } from '@/component';
 
-export default function HeaderBar() {
+export function HeaderBar() {
   const [isMounted, setIsMounted] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
 
@@ -25,7 +25,7 @@ export default function HeaderBar() {
     <AppBar position="fixed" sx={{ top: 0, left: 0, right: 0 }}>
       <Toolbar sx={{ display: 'flex', alignItems: 'center', minHeight: '64px !important', px: 2 }}>
         <Typography variant="h4" component="div">
-          Toggle Demo
+          Todo-List Demo
         </Typography>
         <Box sx={{ ml: 'auto', height: 80, display: 'flex', alignItems: 'center' }}>
           <FormControlLabel

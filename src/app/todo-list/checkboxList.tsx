@@ -9,8 +9,10 @@ import {
   ListItemText,
   Checkbox,
 } from '@mui/material';
+import { useState } from 'react';
+
 export default function CheckboxList() {
-  const [checkedTodoIdList, setCheckedTodoIdList] = React.useState<string[] | null>(null);
+  const [checkedTodoIdList, setCheckedTodoIdList] = useState<string[] | null>(null);
 
   const handleToggle = (selectTodoId: string | number) => () => {
     const id = String(selectTodoId);

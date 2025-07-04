@@ -6,7 +6,7 @@ export default function Page() {
 
 const page = () => {
   return (
-    <Box mt={8} display="flex" alignItems="flex-start" minHeight="100vh">
+    <Box mt={16} display="flex" alignItems="flex-start" minHeight="100vh">
       <h1 style={{ margin: '0 auto', width: 'fit-content' }}>This is Entry</h1>
     </Box>
   );
