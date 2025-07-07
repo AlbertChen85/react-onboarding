@@ -1,20 +1,20 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
-import { createTaskFormSchema, CreateTaskFormSchemaType, Field } from '@/component';
+import React from 'react';
+import { Form, FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from 'react-hook-form';
+import { createTaskFormSchema, CreateTaskFormSchemaType, Field } from '@/components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, MenuItem, Typography } from '@mui/material';
-import { createNewTask, getTaskStatusService } from './service/taskService';
+import { useCreateTask, useTaskStatus } from '../../../../components/service/taskService';
 
 export function CreateTaskList() {
   return (
-    <div>
-      <Typography variant="h4" component="div" color='black'>
+    <Box>
+      <Typography variant="h4" component="div" color="black">
         Create Task List Demo
       </Typography>
       {createTaskList()}
-    </div>
+    </Box>
   );
 }
 
@@ -23,12 +23,11 @@ type Status = {
   name: string;
 };
 
-const createTaskList = () => {
-  const [statusArray, setStatus] = useState<Status[]>([]);
+export function createTaskList() {
+  const { status } = useTaskStatus();
+  const statusArray: Status[] = status as Status[];
 
-  useEffect(() => {
-    getTaskStatusService().then(setStatus).catch(console.error);
-  }, []);
+  const { createTask } = useCreateTask();
 
   const method = useForm<CreateTaskFormSchemaType>({
     resolver: zodResolver(createTaskFormSchema),
@@ -41,16 +40,8 @@ const createTaskList = () => {
   });
   const { handleSubmit, getValues } = method;
 
-  const onSubmit: SubmitHandler<CreateTaskFormSchemaType> = (fromData) => {
-    createNewTask(fromData)
-      .then((response) => {
-        console.log('Task created successfully:', response);
-        // Optionally, you can reset the form or show a success message here
-      })
-      .catch((error) => {
-        console.error('Error creating task:', error);
-        // Optionally, you can show an error message here
-      });
+  const onSubmit: SubmitHandler<CreateTaskFormSchemaType> = async (fromData) => {
+    await createTask(fromData);
     console.log(fromData);
   };
 
@@ -61,7 +52,7 @@ const createTaskList = () => {
 
   return (
     <FormProvider {...method}>
-      <div style={{ width: '100%' }}>
+      <Box style={{ width: '100%' }}>
         <Box
           p={4}
           mt={2}
@@ -70,7 +61,7 @@ const createTaskList = () => {
           width={'100%'}
           mx="auto"
         >
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <Form>
             <Box display="flex" gap={2} justifyContent="flex-start" alignItems="center">
               <Typography component="label" color="black" sx={{ textAlign: 'center' }}>
                 Title
@@ -91,14 +82,14 @@ const createTaskList = () => {
               </Typography>
               <Field.Text name="description" sx={{ textAlign: 'center' }} />
             </Box>
-          </form>
+          </Form>
         </Box>
         <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
           <Button variant="contained" onClick={handleSubmit(onSubmit, onError)}>
             Submit
           </Button>
         </Box>
-      </div>
+      </Box>
     </FormProvider>
   );
-};
+}
