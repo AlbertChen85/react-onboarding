@@ -2,7 +2,7 @@
 
 import { AppBar, Box, Checkbox, FormControlLabel, Toolbar, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { StyledToggleButton } from '@/component';
+import { StyledToggleButton } from '@/components';
 
 export function HeaderBar() {
   const [isMounted, setIsMounted] = useState(false);
