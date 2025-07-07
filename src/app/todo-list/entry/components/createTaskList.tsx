@@ -5,7 +5,7 @@ import { Form, FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from '
 import { createTaskFormSchema, CreateTaskFormSchemaType, Field } from '@/components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, MenuItem, Typography } from '@mui/material';
-import { useCreateTask, useTaskStatus } from '../../../../components/service/taskService';
+import { useCreateTask, useGetTaskStatus } from '@/hooks/todo-list';
 
 export function CreateTaskList() {
   return (
@@ -24,7 +24,7 @@ type Status = {
 };
 
 export function createTaskList() {
-  const { status } = useTaskStatus();
+  const { status } = useGetTaskStatus();
   const statusArray: Status[] = status as Status[];
 
   const { createTask } = useCreateTask();
