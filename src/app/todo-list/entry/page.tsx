@@ -1,7 +1,7 @@
 'use client';
 
 import Box from '@mui/material/Box';
-import { CreateTaskList } from '../../../component/createTaskList';
+import { CreateTaskList } from './components/createTaskList';
 import { Container } from '@mui/material';
 
 export default function Page() {
