@@ -1,6 +1,9 @@
+'use client';
+
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { HeaderBar } from '@/components';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -12,6 +15,8 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+const queryClient = new QueryClient();
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -20,8 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <HeaderBar />
-        {children}
+        <QueryClientProvider client={queryClient}>
+          <HeaderBar />
+          {children}
+        </QueryClientProvider>
       </body>
     </html>
   );
