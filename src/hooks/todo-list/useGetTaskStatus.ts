@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "./constant";
+import { Status } from "./type";
 
 export function useGetTaskStatus() {
-  const [status, setStatus] = useState<any[]>([]);
+  const [status, setStatus] = useState<Status[]>([]);
 
   useEffect(() => {
     axios

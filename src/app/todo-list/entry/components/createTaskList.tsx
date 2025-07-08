@@ -18,14 +18,8 @@ export function CreateTaskList() {
   );
 }
 
-type Status = {
-  id: number;
-  name: string;
-};
-
 export function createTaskList() {
   const { status } = useGetTaskStatus();
-  const statusArray: Status[] = status as Status[];
 
   const { createTask } = useCreateTask();
 
@@ -71,7 +65,7 @@ export function createTaskList() {
                 Status
               </Typography>
               <Field.Select name="statusId" label="status">
-                {statusArray.map((option) => (
+                {status.map((option) => (
                   <MenuItem key={option.id} value={option.id}>
                     {option.name}
                   </MenuItem>
