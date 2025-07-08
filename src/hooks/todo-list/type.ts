@@ -1,6 +1,7 @@
 export type Status = {
   id: number;
   name: string;
+}
 
 export type TaskRow = {
   name: string;
