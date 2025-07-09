@@ -3,10 +3,8 @@
 import React, { useState } from 'react';
 import { Box, Button, Container, SelectChangeEvent } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import { ListTable } from './listTable/components/listTable';
-import { TodoListPagination } from './listTable/components/todoListPagination';
-import { Dropdown } from './listTable/components/dropdown';
 import { useGetTasks } from '@/hooks/todo-list';
+import { Dropdown, ListTable, TodoListPagination } from './listTable/components';
 
 export default function Page() {
   return page();
