@@ -1,4 +1,8 @@
+'use client';
+
 import Box from '@mui/material/Box';
+import { CreateTaskList } from './components/createTaskList';
+import { Container } from '@mui/material';
 
 export default function Page() {
   return page();
@@ -6,8 +10,20 @@ export default function Page() {
 
 const page = () => {
   return (
-    <Box mt={16} display="flex" alignItems="flex-start" minHeight="100vh">
-      <h1 style={{ margin: '0 auto', width: 'fit-content' }}>This is Entry</h1>
-    </Box>
+    <Container sx={{ alignItems: 'flex-start', minHeight: '100vh' }}>
+      <Box
+        mt={8}
+        p={4}
+        bgcolor="#ffffff"
+        borderRadius={2}
+        justifyContent="center"
+        alignItems="flex-start"
+        width="auto"
+        height="auto"
+        minHeight={'80vh'}
+      >
+        <CreateTaskList />
+      </Box>
+    </Container>
   );
 };
