@@ -19,9 +19,9 @@ export function CreateTaskList() {
 }
 
 export function createTaskList() {
-  const { status } = useGetTaskStatus();
+  const { data: status } = useGetTaskStatus();
 
-  const { createTask } = useCreateTask();
+  const { mutate } = useCreateTask();
 
   const method = useForm<CreateTaskFormSchemaType>({
     resolver: zodResolver(createTaskFormSchema),
@@ -32,15 +32,13 @@ export function createTaskList() {
     },
     mode: 'onChange',
   });
-  const { handleSubmit, getValues } = method;
+  const { handleSubmit } = method;
 
   const onSubmit: SubmitHandler<CreateTaskFormSchemaType> = async (fromData) => {
-    await createTask(fromData);
-    console.log(fromData);
+    mutate(fromData);
   };
 
   const onError: SubmitErrorHandler<CreateTaskFormSchemaType> = (errors) => {
-    console.log(getValues());
     console.error(errors);
   };
 
@@ -65,7 +63,7 @@ export function createTaskList() {
                 Status
               </Typography>
               <Field.Select name="statusId" label="status">
-                {status.map((option) => (
+                {status?.map((option) => (
                   <MenuItem key={option.id} value={option.id}>
                     {option.name}
                   </MenuItem>
