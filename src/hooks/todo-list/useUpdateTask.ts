@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 export function useUpdateTask() {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const { mutate: updateTask } = useMutation({
     mutationFn: async ({ taskId, taskData }: { taskId: string; taskData: TaskRow }) => {
       if (!taskId) {
         throw new Error('Task ID is required');
@@ -19,4 +19,5 @@ export function useUpdateTask() {
       queryClient.invalidateQueries({ queryKey: ['task'] });
     },
   });
+  return { updateTask };
 }

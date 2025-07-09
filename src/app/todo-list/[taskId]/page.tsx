@@ -10,7 +10,7 @@ export default function Page() {
   const params = useParams();
   const taskId = params.taskId as string;
 
-  const { task } = useGetTask({ taskId: taskId });
+  const { data: task } = useGetTask({ taskId: taskId });
   return (
     <Container sx={{ alignItems: 'flex-start', minHeight: '100vh' }}>
       <Box

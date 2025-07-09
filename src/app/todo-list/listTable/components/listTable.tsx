@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 export function ListTable({ taskRows }: { taskRows: TaskRow[] }) {
-  const { data: status } = useGetTaskStatus();
+  const { data: statusOptions } = useGetTaskStatus();
   const router = useRouter();
 
   return (
@@ -51,7 +51,7 @@ export function ListTable({ taskRows }: { taskRows: TaskRow[] }) {
                 </TableCell>
                 <TableCell align="left">
                   {(() => {
-                    const name = status?.find((s) => s.id === row.statusId)?.name;
+                    const name = statusOptions?.find((s) => s.id === row.statusId)?.name;
                     return name ? name.charAt(0).toUpperCase() + name.slice(1) : row.statusId;
                   })()}
                 </TableCell>

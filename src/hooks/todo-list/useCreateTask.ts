@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 export function useCreateTask() {
   const queryClient = useQueryClient();
 
-  return useMutation({
+  const { mutate: createTask } = useMutation({
     mutationFn: async (taskData: any) => {
       const res = await axios.post(`${BASE_URL}/api/task`, taskData);
       return res.data;
@@ -15,4 +15,5 @@ export function useCreateTask() {
       queryClient.invalidateQueries({ queryKey: ['task'] });
     },
   });
+  return { createTask };
 }

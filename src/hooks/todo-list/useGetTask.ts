@@ -4,7 +4,7 @@ import { TaskRow } from './type';
 import { useQuery } from '@tanstack/react-query';
 
 export function useGetTask(params: { taskId: string }) {
-  const { data, isLoading, isError, error } = useQuery<TaskRow>({
+  const query = useQuery<TaskRow>({
     queryKey: ['task', params.taskId],
     queryFn: async () => {
       if (!params.taskId) {
@@ -16,10 +16,5 @@ export function useGetTask(params: { taskId: string }) {
     },
   });
 
-  return {
-    task: data,
-    isLoading,
-    isError,
-    error,
-  };
+  return query;
 }

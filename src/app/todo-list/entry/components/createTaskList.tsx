@@ -21,7 +21,7 @@ export function CreateTaskList() {
 export function createTaskList() {
   const { data: status } = useGetTaskStatus();
 
-  const { mutate } = useCreateTask();
+  const { createTask } = useCreateTask();
 
   const method = useForm<CreateTaskFormSchemaType>({
     resolver: zodResolver(createTaskFormSchema),
@@ -35,7 +35,7 @@ export function createTaskList() {
   const { handleSubmit } = method;
 
   const onSubmit: SubmitHandler<CreateTaskFormSchemaType> = async (fromData) => {
-    mutate(fromData);
+    createTask(fromData);
   };
 
   const onError: SubmitErrorHandler<CreateTaskFormSchemaType> = (errors) => {

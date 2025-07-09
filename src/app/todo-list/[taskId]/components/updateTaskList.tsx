@@ -21,7 +21,7 @@ export function UpdateTaskList({ taskId, defaultRow }: { taskId: string; default
 
 export function CreateTaskList({ taskId, defaultRow }: { taskId: string; defaultRow?: TaskRow }) {
   const { data: status } = useGetTaskStatus();
-  const { mutate } = useUpdateTask();
+  const { updateTask } = useUpdateTask();
 
   const method = useForm<CreateTaskFormSchemaType>({
     resolver: zodResolver(createTaskFormSchema),
@@ -42,7 +42,7 @@ export function CreateTaskList({ taskId, defaultRow }: { taskId: string; default
       description: fromData.description,
       id: taskId,
     };
-    mutate({ taskId, taskData: data });
+    updateTask({ taskId, taskData: data });
   };
 
   const onError: SubmitErrorHandler<CreateTaskFormSchemaType> = (errors) => {
