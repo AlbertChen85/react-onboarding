@@ -1,15 +1,22 @@
-import axios from "axios";
-import { BASE_URL } from "./constant";
+import axios from 'axios';
+import { BASE_URL } from './constant';
+import { TaskRow } from './type';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function useUpdateTask() {
-  const updateTask = async (taskId: string, taskData: any) => {
-    try {
-      const res = await axios.put(`${BASE_URL}/api/task/${taskId}`, taskData);
-      return res.data;
-    } catch (err) {
-      console.error('Error updating task:', err);
-    }
-  };
+  const queryClient = useQueryClient();
 
-  return { updateTask };
+  return useMutation({
+    mutationFn: async ({ taskId, taskData }: { taskId: string; taskData: TaskRow }) => {
+      if (!taskId) {
+        throw new Error('Task ID is required');
+      }
+      const result = await axios.put(`${BASE_URL}/api/task/${taskId}`, taskData);
+      return result.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+      queryClient.invalidateQueries({ queryKey: ['task'] });
+    },
+  });
 }

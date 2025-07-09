@@ -7,6 +7,7 @@ export type TaskRow = {
   name: string;
   statusId: number;
   description: string;
+  id: string;
 };
 
 export type TaskResponse = {
