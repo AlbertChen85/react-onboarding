@@ -3,11 +3,12 @@
 import { AppBar, Box, Checkbox, FormControlLabel, Toolbar, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { StyledToggleButton } from '@/components';
+import { useThemeContext } from './user-preference-context';
 
 export function HeaderBar() {
   const [isMounted, setIsMounted] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-
+  const { setTheme } = useThemeContext();
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -18,6 +19,7 @@ export function HeaderBar() {
 
   const handleToggle = (isOn: boolean) => {
     setIsChecked(isOn);
+    setTheme(isOn ? 'dark' : 'light');
     console.log(`Is Checked : ${isOn}`);
   };
 

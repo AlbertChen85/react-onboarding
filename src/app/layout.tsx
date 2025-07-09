@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import { HeaderBar } from '@/components';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { CustomThemeProvider } from '@/components/user-preference-context';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -16,14 +17,14 @@ const geistMono = Geist_Mono({
 });
 
 const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        // With SSR, we usually want to set some default staleTime
-        // above 0 to avoid refetching immediately on the client
-        staleTime: 60 * 1000,
-      },
+  defaultOptions: {
+    queries: {
+      // With SSR, we usually want to set some default staleTime
+      // above 0 to avoid refetching immediately on the client
+      staleTime: 60 * 1000,
     },
-  });
+  },
+});
 
 export default function RootLayout({
   children,
@@ -33,10 +34,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <QueryClientProvider client={queryClient}>
-          <HeaderBar />
-          {children}
-        </QueryClientProvider>
+        <CustomThemeProvider>
+          <QueryClientProvider client={queryClient}>
+            <HeaderBar />
+            {children}
+          </QueryClientProvider>
+        </CustomThemeProvider>
       </body>
     </html>
   );
