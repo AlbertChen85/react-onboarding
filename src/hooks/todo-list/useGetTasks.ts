@@ -1,23 +1,20 @@
-import axios from "axios";
-import { useCallback, useEffect, useState } from "react";
-import { BASE_URL } from "./constant";
+import axios from 'axios';
+import { BASE_URL } from './constant';
+import { useQuery } from '@tanstack/react-query';
+import { TaskResponse } from './type';
 
+export function useGetTasks(params: { name?: string; page?: number; size?: number } = {}) {
+  const { name = '', page = 1, size = 10 } = params;
 
-export function useGetTasks() {
-  const [tasks, setTasks] = useState<any[]>([]);
+  const query = useQuery<TaskResponse>({
+    queryKey: ['tasks', name, page, size],
+    queryFn: async () => {
+      const result = await axios.get<TaskResponse>(`${BASE_URL}/api/task`, {
+        params: { name, page, size },
+      });
+      return result.data;
+    },
+  });
 
-  const fetchTasks = useCallback(async () => {
-    try {
-      const result = await axios.get(`${BASE_URL}/api/task`);
-      setTasks(result.data);
-    } catch (err) {
-      console.error('Error fetching tasks:', err);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchTasks();
-  }, [fetchTasks]);
-
-  return { tasks };
+  return query;
 }

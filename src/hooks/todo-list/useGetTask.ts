@@ -1,20 +1,20 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { BASE_URL } from "./constant";
+import axios from 'axios';
+import { BASE_URL } from './constant';
+import { TaskRow } from './type';
+import { useQuery } from '@tanstack/react-query';
 
-export function useGetTask(taskId: string) {
-  const [task, setTask] = useState<any>(null);
+export function useGetTask(params: { taskId: string }) {
+  const query = useQuery<TaskRow>({
+    queryKey: ['task', params.taskId],
+    queryFn: async () => {
+      if (!params.taskId) {
+        throw new Error('Task ID is required');
+      }
 
-  useEffect(() => {
-    if (!taskId) return;
+      const result = await axios.get<TaskRow>(`${BASE_URL}/api/task/${params.taskId}`);
+      return result.data;
+    },
+  });
 
-    axios
-      .get(`${BASE_URL}/api/task/${taskId}`)
-      .then((res) => setTask(res.data))
-      .catch((err) => {
-        console.error('Error fetching task by ID:', err);
-      });
-  }, [taskId]);
-
-  return { task };
+  return query;
 }

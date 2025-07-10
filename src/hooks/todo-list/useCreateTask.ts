@@ -1,15 +1,19 @@
-import axios from "axios";
-import { BASE_URL } from "./constant";
+import axios from 'axios';
+import { BASE_URL } from './constant';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function useCreateTask() {
-  const createTask = async (taskData: any) => {
-    try {
+  const queryClient = useQueryClient();
+
+  const { mutate: createTask } = useMutation({
+    mutationFn: async (taskData: any) => {
       const res = await axios.post(`${BASE_URL}/api/task`, taskData);
       return res.data;
-    } catch (err) {
-      console.error('Error creating task:', err);
-    }
-  };
-
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
+      queryClient.invalidateQueries({ queryKey: ['task'] });
+    },
+  });
   return { createTask };
 }
