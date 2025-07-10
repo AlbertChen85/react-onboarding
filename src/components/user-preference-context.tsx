@@ -1,4 +1,3 @@
-'use client';
 import { createTheme, ThemeProvider, useColorScheme } from '@mui/material';
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
@@ -9,7 +8,7 @@ type ThemeContextType = {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const useThemeContext = (): ThemeContextType => {
+export const UseThemeContext = (): ThemeContextType => {
   const context = useContext(ThemeContext);
   if (context === undefined) {
     throw new Error('useThemeContext must be used within a ThemeProvider');
@@ -21,11 +20,10 @@ function ModeSwitcher({ theme }: { theme?: 'light' | 'dark' | 'system' }) {
   const { setMode } = useColorScheme();
 
   useEffect(() => {
-    console.log(theme);
     if (theme === 'light' || theme === 'dark') {
       setMode(theme);
     } else {
-      setMode(null); // fallback for 'system' or undefined
+      setMode(null);
     }
   }, [theme, setMode]);
 
@@ -50,12 +48,4 @@ export const CustomThemeProvider: React.FC<{ children: ReactNode }> = ({ childre
       </ThemeProvider>
     </ThemeContext.Provider>
   );
-};
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (context === undefined) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
-  return context;
 };
