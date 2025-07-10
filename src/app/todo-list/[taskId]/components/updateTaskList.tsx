@@ -5,37 +5,44 @@ import { Form, FormProvider, SubmitErrorHandler, SubmitHandler, useForm } from '
 import { createTaskFormSchema, CreateTaskFormSchemaType, Field } from '@/components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, MenuItem, Typography } from '@mui/material';
-import { useCreateTask, useGetTaskStatus } from '@/hooks/todo-list';
+import { useGetTaskStatus, useUpdateTask } from '@/hooks/todo-list';
+import { TaskRow } from '@/hooks/todo-list/type';
 
-export function CreateTaskList() {
+export function UpdateTaskList({ taskId, defaultRow }: { taskId: string; defaultRow?: TaskRow }) {
   return (
     <Box>
       <Typography variant="h4" component="div" color="black">
         Create Task List Demo
       </Typography>
-      {createTaskList()}
+      <CreateTaskList taskId={taskId} defaultRow={defaultRow} />
     </Box>
   );
 }
 
-export function createTaskList() {
+export function CreateTaskList({ taskId, defaultRow }: { taskId: string; defaultRow?: TaskRow }) {
   const { data: status } = useGetTaskStatus();
-
-  const { createTask } = useCreateTask();
+  const { updateTask } = useUpdateTask();
 
   const method = useForm<CreateTaskFormSchemaType>({
     resolver: zodResolver(createTaskFormSchema),
     defaultValues: {
-      name: '',
-      statusId: 1,
-      description: '',
+      name: defaultRow?.name ?? '',
+      statusId: defaultRow?.statusId ?? undefined,
+      description: defaultRow?.description ?? '',
     },
     mode: 'onChange',
   });
-  const { handleSubmit } = method;
+  const { handleSubmit, formState } = method;
 
   const onSubmit: SubmitHandler<CreateTaskFormSchemaType> = async (fromData) => {
-    createTask(fromData);
+    console.log(fromData);
+    const data: TaskRow = {
+      name: fromData.name,
+      statusId: fromData.statusId,
+      description: fromData.description,
+      id: taskId,
+    };
+    updateTask({ taskId, taskData: data });
   };
 
   const onError: SubmitErrorHandler<CreateTaskFormSchemaType> = (errors) => {
@@ -77,8 +84,12 @@ export function createTaskList() {
           </Form>
         </Box>
         <Box display="flex" justifyContent="flex-end" alignItems="flex-end">
-          <Button variant="contained" onClick={handleSubmit(onSubmit, onError)}>
-            Submit
+          <Button
+            variant="contained"
+            onClick={handleSubmit(onSubmit, onError)}
+            disabled={!formState.isDirty}
+          >
+            Update
           </Button>
         </Box>
       </Box>

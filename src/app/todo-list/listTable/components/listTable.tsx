@@ -10,16 +10,12 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
-type Status = {
-  id: number;
-  name: string;
-};
-
 export function ListTable({ taskRows }: { taskRows: TaskRow[] }) {
-  const { status } = useGetTaskStatus();
-  const statusArray: Status[] = status as Status[];
+  const { data: statusOptions } = useGetTaskStatus();
+  const router = useRouter();
 
   return (
     <TableContainer component={Paper}>
@@ -46,11 +42,16 @@ export function ListTable({ taskRows }: { taskRows: TaskRow[] }) {
             taskRows?.map((row) => (
               <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 <TableCell component={'th'} scope="row">
-                  {row.name}
+                  <span
+                    style={{ color: 'blue', cursor: 'pointer', textDecoration: 'underline' }}
+                    onClick={() => router.push(`/todo-list/${row.id}`)}
+                  >
+                    {row.name}
+                  </span>
                 </TableCell>
                 <TableCell align="left">
                   {(() => {
-                    const name = statusArray.find((s) => s.id === row.statusId)?.name;
+                    const name = statusOptions?.find((s) => s.id === row.statusId)?.name;
                     return name ? name.charAt(0).toUpperCase() + name.slice(1) : row.statusId;
                   })()}
                 </TableCell>
