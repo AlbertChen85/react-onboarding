@@ -1,9 +1,11 @@
 import { createTheme, ThemeProvider, useColorScheme } from '@mui/material';
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
+type themeType = 'light' | 'dark' | 'system' | undefined;
+
 type ThemeContextType = {
-  theme: 'light' | 'dark' | 'system' | undefined;
-  setTheme: (theme: 'light' | 'dark' | 'system' | undefined) => void;
+  theme: themeType;
+  setTheme: (theme: themeType) => void;
 };
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -16,7 +18,7 @@ export const UseThemeContext = (): ThemeContextType => {
   return context;
 };
 
-function ModeSwitcher({ theme }: { theme?: 'light' | 'dark' | 'system' }) {
+function ModeSwitcher({ theme }: { theme?: themeType }) {
   const { setMode } = useColorScheme();
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const defaultTheme = createTheme({
 });
 
 export const CustomThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<'light' | 'dark' | 'system' | undefined>(undefined);
+  const [theme, setTheme] = useState<themeType>(undefined);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

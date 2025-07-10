@@ -11,8 +11,11 @@ export function HeaderBar() {
 
   useEffect(() => {
     setIsMounted(true);
-    setTheme(isChecked ? 'dark' : 'light');
   }, []);
+
+  useEffect(() => {
+    setTheme(isChecked ? 'dark' : 'light');
+  }, [isChecked]);
 
   if (!isMounted) {
     return null;
@@ -20,7 +23,6 @@ export function HeaderBar() {
 
   const handleToggle = (isOn: boolean) => {
     setIsChecked(isOn);
-    setTheme(isOn ? 'dark' : 'light');
   };
 
   return (
